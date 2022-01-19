@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Book } from '../custom-types/Book';
 
 @Component({
   selector: 'app-folder',
@@ -9,10 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 export class FolderPage implements OnInit {
   public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  public bookList: Book[] = [new Book ('a', 'a','a',1), new Book ('a', 'a','a',1), new Book ('a', 'a','a',1)];
 
+  constructor(private activatedRoute: ActivatedRoute) {}
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
-
 }
