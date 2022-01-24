@@ -11,13 +11,13 @@ export class MyBooksService {
       {id: 'ad', title:'a', synopses:'a', price:1}];
   constructor() { }
   get bookList(): Book[] {
-    return this.bookListVariable;
+    return [...this.bookListVariable];
   }
   set bookList(value: Book[]) {
     this.bookListVariable = value;
   }
   findBookInList(id: string): Book{
-    return this.bookList.find( book => book.id === id);
+    return {...this.bookList.find( book => book.id === id)};
   }
   deleteBook(id: string): boolean{
     const originalLength = this.bookList.length;
@@ -26,6 +26,12 @@ export class MyBooksService {
   }
   addBook(book: Book): void{
     this.bookList.push(book);
+  }
+  changeBook(book: Book){
+    const bookFromList = this.bookList.find(bookFoundOnList => bookFoundOnList.id === book.id);
+    bookFromList.title = book.title;
+    bookFromList.price = book.price;
+    bookFromList.synopses = book.synopses;
   }
   createBook(title: string, synopses: string, price: string): Book{
     // temporary way of making unique id, must be changed

@@ -47,5 +47,7 @@ export class BookDetailsPage implements OnInit {
     });
   }
   changeBook(){
+    this.myBooksService.changeBook(this.book);
+    this.router.navigate(['/folder/myBooks']);
   }
 }

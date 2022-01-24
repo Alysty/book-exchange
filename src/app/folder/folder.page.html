@@ -1,5 +1,5 @@
 <ion-content>
-  <app-my-books>
-
+  <app-my-books *ngFor="let book of bookList"
+  [book]="book">
   </app-my-books>
 </ion-content>
