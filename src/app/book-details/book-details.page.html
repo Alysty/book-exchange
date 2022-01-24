@@ -1,22 +1,33 @@
+
 <ion-header>
   <ion-toolbar>
-    <ion-title>book-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Book Details</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button >
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-item>
-    <ion-label value="Disabled">Id: {{id}}</ion-label>
+    <ion-label value="Disabled">Id: {{book.id}}</ion-label>
   </ion-item>
   <ion-item>
     <ion-label>Title: </ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="book.title"></ion-input>
   </ion-item>
   <ion-item type="number">
     <ion-label>Price: </ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="book.price"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-textarea placeholder="Synopses"></ion-textarea>
+    <ion-label position="floating">Synopses:</ion-label>
+    <ion-textarea [(ngModel)]="book.synopses" ></ion-textarea>
   </ion-item>
+
+  <ion-button expand="block" >Save Changes</ion-button>
 </ion-content>

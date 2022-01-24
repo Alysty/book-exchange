@@ -1,13 +1,5 @@
 <ion-content>
-  <ion-card *ngFor="let book of bookList" href="./book-details/{{book.id}}">
-    <ion-card-header>
-      <ion-card-title>{{book.title}}</ion-card-title>
-    </ion-card-header>
+  <app-my-books>
 
-    <ion-card-content>
-      <b>synopses</b>:{{book.synopses}}
-      <p></p>
-      <b>price</b>: {{book.price}}
-    </ion-card-content>
-  </ion-card>
+  </app-my-books>
 </ion-content>

@@ -9,11 +9,20 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+      },
+      {
+        path: ':book-id',
+        loadChildren: () => import('./book-details/book-details.module').then( m => m.BookDetailsPageModule)
+      }
+    ]
   },
   {
-    path: 'book-details/:id',
-    loadChildren: () => import('./book-details/book-details.module').then( m => m.BookDetailsPageModule)
+    path: 'my-books',
+    loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
   }
 ];
 
