@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MyBooksPageRoutingModule } from './my-books-routing.module';
 
-import { MyBooksPage } from './my-books.page';
+import { MyBooksComponent } from './my-books.component';
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { MyBooksPage } from './my-books.page';
     MyBooksPageRoutingModule
   ],
   exports: [
-    MyBooksPage
+    MyBooksComponent
   ],
-  declarations: [MyBooksPage]
+  declarations: [MyBooksComponent]
 })
 export class MyBooksPageModule {}
