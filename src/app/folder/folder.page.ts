@@ -19,5 +19,4 @@ export class FolderPage implements OnInit {
   ionViewWillEnter(){
     this.bookList = this.myBooksService.bookList;
   }
-
 }
