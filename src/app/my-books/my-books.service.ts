@@ -33,7 +33,7 @@ export class MyBooksService {
     bookFromList.price = book.price;
     bookFromList.synopses = book.synopses;
   }
-  createBook(title: string, synopses: string, price: string): Book{
+  createBook(title: string, synopses: string, price: number): Book{
     // temporary way of making unique id, must be changed
     return {id: this.bookList[this.bookList.length - 1].id + 'a', title:'a', synopses:'a', price:1};
   }

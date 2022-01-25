@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MyBooksService} from '../my-books/my-books.service';
 import {Book} from '../custom-types/Book.model';
@@ -11,21 +11,29 @@ import {AlertController} from '@ionic/angular';
 })
 export class BookDetailsPage implements OnInit {
   book: Book;
+  creatingNewBookFlag = false;
+
   constructor(private activatedRoute: ActivatedRoute,
               private myBooksService: MyBooksService,
               private router: Router,
-              private alertController: AlertController) {}
+              private alertController: AlertController) {
+  }
+
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('book-id')){
-        this.router.navigate(['/folder/myBooks']);
+      if (!paramMap.has('book-id')) {
+        this.creatingNewBookFlag = true;
         return;
       }
-      const bookId= paramMap.get('book-id');
-      this.book= this.myBooksService.findBookInList(bookId);
+      const bookId = paramMap.get('book-id');
+      this.book = this.myBooksService.findBookInList(bookId);
     });
   }
-  deleteBook(){
+  numericOnly(event): boolean {
+    const pattern = /^([0-9])$/;
+    return pattern.test(event.key);
+  }
+  deleteBook() {
     this.alertController.create({
       header: 'Please confirm your choice',
       message: 'Do you want to delete the book from your library ? this action is irreversible',
@@ -46,8 +54,13 @@ export class BookDetailsPage implements OnInit {
       alertEl.present();
     });
   }
-  changeBook(){
+
+  changeBook() {
     this.myBooksService.changeBook(this.book);
     this.router.navigate(['/folder/myBooks']);
+  }
+
+  addBook() {
+    this.myBooksService.createBook(this.book.title, this.book.synopses, this.book.price);
   }
 }
