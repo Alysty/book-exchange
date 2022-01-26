@@ -61,6 +61,6 @@ export class BookDetailsPage implements OnInit {
   }
 
   addBook() {
-    this.myBooksService.createBook(this.book.title, this.book.synopses, this.book.price);
+    return;
   }
 }

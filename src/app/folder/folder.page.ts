@@ -10,7 +10,7 @@ import {Book} from '../custom-types/Book.model';
 })
 export class FolderPage implements OnInit {
   public folder: string;
-  public bookList: Book[];
+  public bookList: Book[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private myBooksService: MyBooksService) {}
   ngOnInit() {
