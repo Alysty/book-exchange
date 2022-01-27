@@ -54,9 +54,9 @@ export class StorageService {
         if (data.rows.length> 0){
           return {
             id: data.rows.item(0).ID,
-            title:data.rows.item(0).PRICE,
+            title:data.rows.item(0).TITLE,
             synopses:data.rows.item(0).SYNOPSIS,
-            price:data.rows.item(0).TITLE
+            price:data.rows.item(0).PRICE
           };
         }else {
           throw new Error('Book not found');
@@ -90,9 +90,9 @@ export class StorageService {
           for (let i = 0; i < data.rows.length; i++){
             books.push({
               id: data.rows.item(i).ID,
-              title:data.rows.item(i).PRICE,
+              title:data.rows.item(i).TITLE,
               synopses:data.rows.item(i).SYNOPSIS,
-              price:data.rows.item(i).TITLE
+              price:data.rows.item(i).PRICE
             });
           }
         }
