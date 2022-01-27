@@ -53,10 +53,10 @@ export class StorageService {
       .then((data)=>{
         if (data.rows.length> 0){
           return {
-            id: data.rows.item(0).id,
-            title:data.rows.item(0).title,
-            synopses:data.rows.item(0).synopses,
-            price:data.rows.item(0).price
+            id: data.rows.item(0).ID,
+            title:data.rows.item(0).PRICE,
+            synopses:data.rows.item(0).SYNOPSIS,
+            price:data.rows.item(0).TITLE
           };
         }else {
           throw new Error('Book not found');

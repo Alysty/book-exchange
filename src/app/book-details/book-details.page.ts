@@ -26,7 +26,9 @@ export class BookDetailsPage implements OnInit {
         return;
       }
       const bookId = paramMap.get('book-id');
-      //this.book = this.myBooksService.findBookInList(bookId);
+      this.myBooksService.getBookById(Number(bookId)).then((book)=> {
+        this.book = book;
+      }).catch(e => console.error(e));
     });
   }
   numericOnly(event): boolean {
