@@ -4,7 +4,7 @@ import {SQLiteObject, SQLite} from '@awesome-cordova-plugins/sqlite/ngx';
 import {SQLitePorter} from '@ionic-native/sqlite-porter/ngx';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Book} from './custom-types/Book.model';
+import {Book, BookDB} from './custom-types/Book.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,18 @@ export class StorageService {
   getBooks(): Observable<any[]> {
     return this.books.asObservable();
   }
+  addBook(bookDB: BookDB){
+    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE ) values (?1, ?2, ?3);',
+      [bookDB.title, bookDB.synopses, bookDB.price]);
+  }
+  removeBook(id: number){
+    this.database.executeSql('DELETE FROM  Book WHERE id = ?1;',
+      [id]);
+  }
+  changeBook(book: Book){
+    this.database.executeSql('UPDATE Book SET title = ?1, synopsis = ?2, price = ?3 WHERE id = ?4;',
+      [book.title, book.synopses, book.price, book.id]);
+  }
   private createTables(){
     this.httpClient.get('assets/dbTable.sql', {responseType: 'text'}).subscribe((sql)=>{
       this.sqlPorter.importSqlToDb(this.database,sql).then(()=>{
@@ -42,8 +54,7 @@ export class StorageService {
       .subscribe((sql)=>{
         this.sqlPorter.importSqlToDb(this.database,sql)
           .then(()=>{
-            this.loadBooks();
-            this.dbReady.next(true);
+            this.loadBooks().then(()=> {this.dbReady.next(true);});
           })
           .catch(e => console.error(e));
       });

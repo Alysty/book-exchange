@@ -1,34 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Book} from '../custom-types/Book.model';
+import {Book, BookDB} from '../custom-types/Book.model';
 import {StorageService} from '../storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MyBooksService {
-  private bookListVariable: Book[] = [];
-  constructor(storageService: StorageService) {
+  constructor(private storage: StorageService) {
   }
-  get bookList(): Book[] {
-    return [...this.bookListVariable];
+  addBook(bookDB: BookDB){
+    this.storage.addBook(bookDB);
   }
-  set bookList(value: Book[]) {
-    this.bookListVariable = value;
-  }
-  findBookInList(id: string): Book{
-    return {...this.bookList.find( book => book.id === id)};
-  }
-  addBook(book: Book): void{
-  }
-  deleteBook(id: string): boolean{
-    const originalLength = this.bookList.length;
-    this.bookList = this.bookList.filter(book => book.id !== id);
-    return originalLength !== this.bookList.length;
+  removeBook(id: number){
+    this.storage.removeBook(id);
   }
   changeBook(book: Book){
-    const bookFromList = this.bookList.find(bookFoundOnList => bookFoundOnList.id === book.id);
-    bookFromList.title = book.title;
-    bookFromList.price = book.price;
-    bookFromList.synopses = book.synopses;
+    this.storage.changeBook(book);
+  }
+  createBookDB(title: string, synopses: string, price: number): BookDB{
+    return {title, synopses, price};
   }
 }
