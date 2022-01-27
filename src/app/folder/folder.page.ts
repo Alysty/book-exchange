@@ -17,6 +17,8 @@ export class FolderPage implements OnInit {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
   ionViewWillEnter(){
-    this.bookList = this.myBooksService.bookList;
+    this.myBooksService.getBooks().subscribe((books)=>{
+      this.bookList = books;
+    });
   }
 }

@@ -26,12 +26,17 @@ export class BookDetailsPage implements OnInit {
         return;
       }
       const bookId = paramMap.get('book-id');
-      this.book = this.myBooksService.findBookInList(bookId);
+      //this.book = this.myBooksService.findBookInList(bookId);
     });
   }
   numericOnly(event): boolean {
     const pattern = /^([0-9])$/;
     return pattern.test(event.key);
+  }
+  addBook() {
+    this.myBooksService.addBook(
+      this.myBooksService.createBookDB(this.book.title, this.book.synopses, this.book.price)
+    );
   }
   deleteBook() {
     this.alertController.create({
@@ -45,7 +50,7 @@ export class BookDetailsPage implements OnInit {
         {
           text: 'Delete',
           handler: () => {
-            this.myBooksService.deleteBook(this.book.id);
+            this.myBooksService.removeBook(this.book.id);
             this.router.navigate(['/folder/myBooks']);
           }
         }
@@ -54,13 +59,9 @@ export class BookDetailsPage implements OnInit {
       alertEl.present();
     });
   }
-
   changeBook() {
     this.myBooksService.changeBook(this.book);
     this.router.navigate(['/folder/myBooks']);
   }
 
-  addBook() {
-    return;
-  }
 }
