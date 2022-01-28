@@ -84,7 +84,6 @@ export class StorageService {
   private loadBooks() {
     return this.database.executeSql('SELECT * from book', [])
       .then((data)=>{
-        console.log(data.rows.item(0));
         const books: Book[]= [];
         if (data.rows.length> 0){
           for (let i = 0; i < data.rows.length; i++){
