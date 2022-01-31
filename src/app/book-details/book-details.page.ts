@@ -41,6 +41,7 @@ export class BookDetailsPage implements OnInit {
     this.myBooksService.addBook(
       this.myBooksService.createBookDB(this.book.title, this.book.synopses, this.book.price)
     );
+    this.router.navigate(['/main-page/myBooks']);
   }
   deleteBook() {
     this.alertController.create({
