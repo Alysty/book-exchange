@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MyBooksService} from '../my-books/my-books.service';
 import {Book} from '../custom-types/Book.model';
 import {AlertController} from '@ionic/angular';
+import {StorageService} from '../storage.service';
 
 @Component({
   selector: 'app-book-details',
@@ -10,13 +11,14 @@ import {AlertController} from '@ionic/angular';
   styleUrls: ['./book-details.page.scss'],
 })
 export class BookDetailsPage implements OnInit {
-  book: Book;
+  book: Book = {id: 0, title: '', price: 0, synopses: ''};
   creatingNewBookFlag = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private myBooksService: MyBooksService,
               private router: Router,
-              private alertController: AlertController) {
+              private alertController: AlertController,
+              private storage: StorageService) {
   }
 
   ngOnInit() {
@@ -26,9 +28,9 @@ export class BookDetailsPage implements OnInit {
         return;
       }
       const bookId = paramMap.get('book-id');
-      this.myBooksService.getBookById(Number(bookId)).then((book)=> {
-        this.book = book;
-      }).catch(e => console.error(e));
+        this.myBooksService.getBookById(Number(bookId)).then((book)=> {
+          this.book = book;
+        }).catch(e => console.error(e));
     });
   }
   numericOnly(event): boolean {
