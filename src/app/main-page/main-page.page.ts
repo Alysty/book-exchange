@@ -4,11 +4,11 @@ import {MyBooksService} from '../my-books/my-books.service';
 import {Book} from '../custom-types/Book.model';
 
 @Component({
-  selector: 'app-folder',
-  templateUrl: './folder.page.html',
-  styleUrls: ['./folder.page.scss'],
+  selector: 'app-main-page',
+  templateUrl: './main-page.page.html',
+  styleUrls: ['./main-page.page.scss'],
 })
-export class FolderPage implements OnInit {
+export class MainPagePage implements OnInit {
   public folder: string;
   public bookList: Book[] = [];
 

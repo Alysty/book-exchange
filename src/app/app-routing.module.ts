@@ -4,15 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/myBooks',
+    redirectTo: 'main-page/myBooks',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
+    path: 'main-page/:id',
     children: [
       {
         path: '',
-        loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+        loadChildren: () => import('./main-page/main-page.module').then(m => m.FolderPageModule)
       },
       {
         path: ':book-id',

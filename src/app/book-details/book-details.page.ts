@@ -53,7 +53,7 @@ export class BookDetailsPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.myBooksService.removeBook(this.book.id);
-            this.router.navigate(['/folder/myBooks']);
+            this.router.navigate(['/main-page/myBooks']);
           }
         }
       ]
@@ -63,7 +63,7 @@ export class BookDetailsPage implements OnInit {
   }
   changeBook() {
     this.myBooksService.changeBook(this.book);
-    this.router.navigate(['/folder/myBooks']);
+    this.router.navigate(['/main-page/myBooks']);
   }
 
 }
