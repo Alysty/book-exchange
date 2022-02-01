@@ -70,17 +70,6 @@ export class StorageService {
       }).catch(e => console.error(e));
     });
   }
-  private seedDatabase() {
-    this.httpClient.get('assets/dbFill.sql', {responseType: 'text'})
-      .subscribe((sql)=>{
-        this.sqlPorter.importSqlToDb(this.database,sql)
-          .then(()=>{
-            this.loadBooks().then(()=> {this.dbReadyVar.next(true);});
-          })
-          .catch(e => console.error(e));
-      });
-  }
-
   private loadBooks() {
     return this.database.executeSql('SELECT * from book', [])
       .then((data)=>{
@@ -97,6 +86,17 @@ export class StorageService {
         }
         this.books.next(books);
       }).catch(e => console.error(e));
+  }
+  //FUNCTION seedDatabase MADE FOR TESTING ONLY, adds 3 entries to the database
+  private seedDatabase() {
+    this.httpClient.get('assets/dbFill.sql', {responseType: 'text'})
+      .subscribe((sql)=>{
+        this.sqlPorter.importSqlToDb(this.database,sql)
+          .then(()=>{
+            this.loadBooks().then(()=> {this.dbReadyVar.next(true);});
+          })
+          .catch(e => console.error(e));
+      });
   }
 
 }
