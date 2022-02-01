@@ -33,10 +33,6 @@ export class BookDetailsPage implements OnInit {
         }).catch(e => console.error(e));
     });
   }
-  numericOnly(event): boolean {
-    const pattern = /^([0-9])$/;
-    return pattern.test(event.key);
-  }
   addBook() {
     this.myBooksService.addBook(
       this.myBooksService.createBookDB(this.book.title, this.book.synopses, this.book.price)
