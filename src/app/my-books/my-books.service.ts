@@ -7,7 +7,6 @@ import {Observable, Subscription} from 'rxjs';
   providedIn: 'root'
 })
 export class MyBooksService {
-  @Input() book: Book;
   constructor(private storage: StorageService) {
   }
   addBook(bookDB: BookDB){
