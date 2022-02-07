@@ -33,6 +33,9 @@ export class StorageService {
   getBooks(): Observable<any[]> {
     return this.books.asObservable();
   }
+  getTradeBooks(): Observable<any[]> {
+    return this.tradeBooks.asObservable();
+  }
   addBook(bookDB: BookDB){
     this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
       [bookDB.title, bookDB.synopses, bookDB.price, bookDB.beingTraded]).catch(e => console.error(e));
@@ -62,7 +65,31 @@ export class StorageService {
         }else {
           throw new Error('Book not found');
         }
-    }).catch(e =>{throw e;});
+      }).catch(e =>{throw e;});
+  }
+  getTradeBookById(id: number): Promise<Book>{
+    return this.database.executeSql('SELECT * FROM BookInTrade WHERE id = ?1', [id])
+      .then((data)=>{
+        if (data.rows.length> 0){
+          return {
+            id: data.rows.item(0).ID,
+            title:data.rows.item(0).TITLE,
+            synopses:data.rows.item(0).SYNOPSIS,
+            price:data.rows.item(0).PRICE,
+            beingTraded: true
+          };
+        }else {
+          throw new Error('Book not found');
+        }
+      }).catch(e =>{throw e;});
+  }
+  exchangeBooks(book: Book){
+    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
+      [book.title, book.synopses, book.price, false]).catch(e => console.error(e));
+    this.database.executeSql('DELETE FROM  BookInTrade WHERE id = ?1;',
+      [book.id]).catch(e => console.error(e));
+    this.loadBooks();
+    this.loadTradeBooks();
   }
   private createTables(){
     this.httpClient.get('assets/dbTable.sql', {responseType: 'text'}).subscribe((sql)=>{
@@ -89,7 +116,6 @@ export class StorageService {
         this.books.next(books);
       }).catch(e => console.error(e));
   }
-  //Trade related methods
   private loadTradeBooks() {
     return this.database.executeSql('SELECT * from BookInTrade', [])
       .then((data)=>{
@@ -108,15 +134,7 @@ export class StorageService {
         this.tradeBooks.next(tradeBooks);
       }).catch(e => console.error(e));
   }
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  exchangeBooks(book: Book){
-    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
-      [book.title, book.synopses, book.price, false]).catch(e => console.error(e));
-    this.database.executeSql('DELETE FROM  BookInTrade WHERE id = ?1;',
-      [book.id]).catch(e => console.error(e));
-    this.loadBooks();
-    this.loadTradeBooks();
-  }
+
   //FUNCTION seedDatabase MADE FOR TESTING ONLY, adds 3 entries to the database
   private seedTradeDatabase() {
     this.httpClient.get('assets/dbFill.sql', {responseType: 'text'})

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MyBooksService} from '../my-books/my-books.service';
+import {BookCardService} from '../book-card/book-card.service';
 import {Book} from '../custom-types/Book.model';
 import {AlertController} from '@ionic/angular';
 import {StorageService} from '../storage.service';
@@ -15,7 +15,7 @@ export class BookDetailsPage implements OnInit {
   creatingNewBookFlag = false;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private myBooksService: MyBooksService,
+              private myBooksService: BookCardService,
               private router: Router,
               private alertController: AlertController,
               private storage: StorageService) {

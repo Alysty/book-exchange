@@ -6,7 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MyBooksService {
+export class BookCardService {
   constructor(private storage: StorageService) {
   }
   addBook(bookDB: BookDB){

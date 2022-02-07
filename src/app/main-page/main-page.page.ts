@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {MyBooksService} from '../my-books/my-books.service';
+import {BookCardService} from '../book-card/book-card.service';
 import {Book} from '../custom-types/Book.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class MainPagePage implements OnInit {
   public bookList: Book[] = [];
   public bookTradeList: Book[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private myBooksService: MyBooksService) {}
+  constructor(private activatedRoute: ActivatedRoute, private myBooksService: BookCardService) {}
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FolderPageRoutingModule } from './main-page-routing.module';
 
 import { MainPagePage } from './main-page.page';
-import {MyBooksPageModule} from '../my-books/my-books.module';
+import {BookCardPageModule} from '../book-card/book-card.module';
 
 @NgModule({
     imports: [
@@ -15,7 +15,7 @@ import {MyBooksPageModule} from '../my-books/my-books.module';
         FormsModule,
         IonicModule,
         FolderPageRoutingModule,
-        MyBooksPageModule
+        BookCardPageModule
     ],
   declarations: [MainPagePage]
 })

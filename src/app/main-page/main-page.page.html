@@ -12,12 +12,13 @@
 
 </ion-header>
 <ion-content *ngIf="folder === 'MyBooks'">
-  <app-my-books *ngFor="let book of bookList"
+  <app-book-card *ngFor="let book of bookList"
                 [book]="book" >
-  </app-my-books>
+  </app-book-card>
 </ion-content>
 <ion-content *ngIf="folder === 'Trade'">
-  <app-my-books *ngFor="let book of bookTradeList"
+  <app-book-card *ngFor="let book of bookTradeList"
                 [book]="book" >
-  </app-my-books>
+  </app-book-card>
+
 </ion-content>
