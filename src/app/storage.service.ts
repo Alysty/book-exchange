@@ -13,7 +13,7 @@ export class StorageService {
   private database: SQLiteObject;
   private dbReadyVar: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private books =  new BehaviorSubject([]);
-
+  private tradeBooks = new BehaviorSubject([]);
   constructor(private plt: Platform, private sqlite: SQLite, private sqlPorter: SQLitePorter, private httpClient: HttpClient) {
     this.plt.ready().then(()=>{
       this.sqlite.create({
@@ -82,15 +82,43 @@ export class StorageService {
               title:data.rows.item(i).TITLE,
               synopses:data.rows.item(i).SYNOPSIS,
               price:data.rows.item(i).PRICE,
-              beingTraded:data.rows.item(i).PRICE
+              beingTraded:data.rows.item(i).BEING_TRADED
             });
           }
         }
         this.books.next(books);
       }).catch(e => console.error(e));
   }
+  //Trade related methods
+  private loadTradeBooks() {
+    return this.database.executeSql('SELECT * from BookInTrade', [])
+      .then((data)=>{
+        const tradeBooks: Book[]= [];
+        if (data.rows.length> 0){
+          for (let i = 0; i < data.rows.length; i++){
+            tradeBooks.push({
+              id: data.rows.item(i).ID,
+              title:data.rows.item(i).TITLE,
+              synopses:data.rows.item(i).SYNOPSIS,
+              price:data.rows.item(i).PRICE,
+              beingTraded: true
+            });
+          }
+        }
+        this.tradeBooks.next(tradeBooks);
+      }).catch(e => console.error(e));
+  }
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  exchangeBooks(book: Book){
+    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
+      [book.title, book.synopses, book.price, false]).catch(e => console.error(e));
+    this.database.executeSql('DELETE FROM  BookInTrade WHERE id = ?1;',
+      [book.id]).catch(e => console.error(e));
+    this.loadBooks();
+    this.loadTradeBooks();
+  }
   //FUNCTION seedDatabase MADE FOR TESTING ONLY, adds 3 entries to the database
-  private seedDatabase() {
+  private seedTradeDatabase() {
     this.httpClient.get('assets/dbFill.sql', {responseType: 'text'})
       .subscribe((sql)=>{
         this.sqlPorter.importSqlToDb(this.database,sql)

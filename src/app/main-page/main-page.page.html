@@ -13,6 +13,11 @@
 </ion-header>
 <ion-content *ngIf="folder === 'MyBooks'">
   <app-my-books *ngFor="let book of bookList"
-  [book]="book" >
+                [book]="book" >
+  </app-my-books>
+</ion-content>
+<ion-content *ngIf="folder === 'Trade'">
+  <app-my-books *ngFor="let book of bookTradeList"
+                [book]="book" >
   </app-my-books>
 </ion-content>
