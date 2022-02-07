@@ -25,7 +25,7 @@ export class MyBooksService {
   getBookById(id: number){
     return this.storage.getBookById(id);
   }
-  createBookDB(title: string, synopses: string, price: number): BookDB{
-    return {title, synopses, price};
+  createBookDB(title: string, synopses: string, price: number, beingTraded: boolean): BookDB{
+    return {title, synopses, price, beingTraded};
   }
 }

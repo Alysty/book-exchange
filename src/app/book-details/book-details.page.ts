@@ -11,7 +11,7 @@ import {StorageService} from '../storage.service';
   styleUrls: ['./book-details.page.scss'],
 })
 export class BookDetailsPage implements OnInit {
-  book: Book = {id: 0, title: '', price: 0, synopses: ''};
+  book: Book = {id: 0, title: '', price: 0, synopses: '', beingTraded: false};
   creatingNewBookFlag = false;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -28,16 +28,16 @@ export class BookDetailsPage implements OnInit {
         return;
       }
       const bookId = paramMap.get('book-id');
-        this.myBooksService.getBookById(Number(bookId)).then((book)=> {
-          this.book = book;
-        }).catch(e => console.error(e));
+      this.myBooksService.getBookById(Number(bookId)).then((book)=> {
+        this.book = book;
+      }).catch(e => console.error(e));
     });
   }
   addBook() {
     this.myBooksService.addBook(
-      this.myBooksService.createBookDB(this.book.title, this.book.synopses, this.book.price)
+      this.myBooksService.createBookDB(this.book.title, this.book.synopses, this.book.price, this.book.beingTraded)
     );
-    this.router.navigate(['/main-page/myBooks']);
+    this.router.navigate(['/main-page/MyBooks']);
   }
   deleteBook() {
     this.alertController.create({
@@ -52,7 +52,7 @@ export class BookDetailsPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.myBooksService.removeBook(this.book.id);
-            this.router.navigate(['/main-page/myBooks']);
+            this.router.navigate(['/main-page/MyBooks']);
           }
         }
       ]
@@ -62,7 +62,7 @@ export class BookDetailsPage implements OnInit {
   }
   changeBook() {
     this.myBooksService.changeBook(this.book);
-    this.router.navigate(['/main-page/myBooks']);
+    this.router.navigate(['/main-page/MyBooks']);
   }
 
 }

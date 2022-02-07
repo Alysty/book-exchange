@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>My Books</ion-title>
-    <ion-buttons slot="primary">
+    <ion-title *ngIf="folder === 'MyBooks'">My Books</ion-title>
+    <ion-title *ngIf="folder === 'Trade'">Trade</ion-title>
+    <ion-title *ngIf="folder === 'MyTrades'">Trade</ion-title>
+    <ion-buttons slot="primary" *ngIf="folder === 'MyBooks'">
       <ion-button [routerLink]="['./createBook']">
         <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
       </ion-button>
@@ -9,8 +11,8 @@
   </ion-toolbar>
 
 </ion-header>
-<ion-content>
+<ion-content *ngIf="folder === 'MyBooks'">
   <app-my-books *ngFor="let book of bookList"
-  [book]="book">
+  [book]="book" >
   </app-my-books>
 </ion-content>

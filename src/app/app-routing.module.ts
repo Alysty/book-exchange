@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'main-page/myBooks',
+    redirectTo: '/main-page/MyBooks',
     pathMatch: 'full'
   },
   {
@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('./main-page/main-page.module').then(m => m.FolderPageModule)
       },
       {
+        path: 'Trade',
+        loadChildren: () => import('./trade-page/trade-page.module').then( m => m.TradePagePageModule)
+      },
+      {
         path: 'createBook',
         loadChildren: () => import('./book-details/book-details.module').then( m => m.BookDetailsPageModule)
       },
@@ -23,10 +27,6 @@ const routes: Routes = [
         loadChildren: () => import('./book-details/book-details.module').then( m => m.BookDetailsPageModule)
       }
     ]
-  },
-  {
-    path: 'my-books',
-    loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
   }
 ];
 

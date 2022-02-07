@@ -26,6 +26,10 @@
     <ion-input type="number"[(ngModel)]="book.price"></ion-input>
   </ion-item>
   <ion-item>
+    <ion-label>I want to trade this book:</ion-label>
+    <ion-toggle [(ngModel)]="book.beingTraded"></ion-toggle>
+  </ion-item>
+  <ion-item>
     <ion-label position="floating">Synopses:</ion-label>
     <ion-textarea [(ngModel)]="book.synopses" ></ion-textarea>
   </ion-item>
