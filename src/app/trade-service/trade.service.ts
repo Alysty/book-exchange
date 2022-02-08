@@ -6,7 +6,7 @@ import {Book} from '../custom-types/Book.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TradeServiceService {
+export class TradeService {
   constructor(private storage: StorageService) {
   }
   exchangeBook(book: Book){

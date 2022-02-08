@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {BookCardService} from '../book-card/book-card.service';
 import {Book} from '../custom-types/Book.model';
+import {TradeService} from '../trade-service/trade.service';
 
 @Component({
   selector: 'app-main-page',
@@ -13,14 +14,19 @@ export class MainPagePage implements OnInit {
   public bookList: Book[] = [];
   public bookTradeList: Book[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private myBooksService: BookCardService) {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private myBooksService: BookCardService,
+              private tradeServiceService: TradeService) {
+  }
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
   ionViewWillEnter(){
     switch ( this.folder ) {
       case 'Trade':
-        console.error('asda');
+        this.tradeServiceService.getTradeBooks().subscribe((books)=>{
+          this.bookTradeList = books;
+        });
         break;
       default:
         this.myBooksService.getBooks().subscribe((books)=>{

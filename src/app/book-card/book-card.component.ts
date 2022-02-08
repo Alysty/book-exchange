@@ -7,6 +7,7 @@ import {Book} from '../custom-types/Book.model';
 })
 export class BookCardComponent implements OnInit{
   @Input() book: Book;
+  @Input() folder: string;
   constructor() { }
   ngOnInit() {
   }

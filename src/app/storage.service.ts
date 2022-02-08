@@ -94,7 +94,10 @@ export class StorageService {
   private createTables(){
     this.httpClient.get('assets/dbTable.sql', {responseType: 'text'}).subscribe((sql)=>{
       this.sqlPorter.importSqlToDb(this.database,sql).then(()=>{
-        this.loadBooks().then(()=> {this.dbReadyVar.next(true);});
+        this.loadBooks().then(()=> {
+          this.loadTradeBooks().then(()=>{
+            this.dbReadyVar.next(true);
+          });});
       }).catch(e => console.error(e));
     });
   }
@@ -120,6 +123,7 @@ export class StorageService {
     return this.database.executeSql('SELECT * from BookInTrade', [])
       .then((data)=>{
         const tradeBooks: Book[]= [];
+        console.log(data);
         if (data.rows.length> 0){
           for (let i = 0; i < data.rows.length; i++){
             tradeBooks.push({
@@ -141,7 +145,7 @@ export class StorageService {
       .subscribe((sql)=>{
         this.sqlPorter.importSqlToDb(this.database,sql)
           .then(()=>{
-            this.loadBooks().then(()=> {this.dbReadyVar.next(true);});
+            this.loadTradeBooks().then();
           })
           .catch(e => console.error(e));
       });

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BookCardService} from '../book-card/book-card.service';
 import {Book} from '../custom-types/Book.model';
 import {AlertController} from '@ionic/angular';
 import {StorageService} from '../storage.service';
+import {TradeService} from "../trade-service/trade.service";
 
 @Component({
   selector: 'app-book-details',
@@ -13,11 +14,12 @@ import {StorageService} from '../storage.service';
 export class BookDetailsPage implements OnInit {
   book: Book = {id: 0, title: '', price: 0, synopses: '', beingTraded: false};
   creatingNewBookFlag = false;
-
+  folder: string;
   constructor(private activatedRoute: ActivatedRoute,
               private myBooksService: BookCardService,
               private router: Router,
               private alertController: AlertController,
+              private tradeService: TradeService,
               private storage: StorageService) {
   }
 
@@ -28,9 +30,18 @@ export class BookDetailsPage implements OnInit {
         return;
       }
       const bookId = paramMap.get('book-id');
-      this.myBooksService.getBookById(Number(bookId)).then((book)=> {
-        this.book = book;
-      }).catch(e => console.error(e));
+      this.activatedRoute.queryParams.subscribe((params)=>{
+        this.folder = params.folder;
+        if(this.folder === 'Trade'){
+          this.tradeService.getTradeBookById(Number(bookId)).then((book)=> {
+            this.book = book;
+          }).catch(e => console.error(e));
+        }else{
+          this.myBooksService.getBookById(Number(bookId)).then((book)=> {
+            this.book = book;
+          }).catch(e => console.error(e));
+        }
+      });
     });
   }
   addBook() {
@@ -64,5 +75,8 @@ export class BookDetailsPage implements OnInit {
     this.myBooksService.changeBook(this.book);
     this.router.navigate(['/main-page/MyBooks']);
   }
-
+  buyBook(){
+    this.tradeService.exchangeBook(this.book);
+    this.router.navigate(['/main-page/Trade']);
+  }
 }

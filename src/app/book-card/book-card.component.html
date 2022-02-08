@@ -1,5 +1,5 @@
 
-<ion-card [routerLink]="['./'+book.id]">
+<ion-card [routerLink]="['./'+book.id]" [queryParams]="{folder:folder}">
   <ion-card-header>
     <ion-card-title>{{book.title}}</ion-card-title>
   </ion-card-header>
