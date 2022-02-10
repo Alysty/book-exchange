@@ -18,6 +18,11 @@
 </ion-content>
 <ion-content *ngIf="folder === 'Trade'">
   <app-book-card [folder]="folder" *ngFor="let book of bookTradeList"
-                [book]="book" >
+                 [book]="book" >
   </app-book-card>
+</ion-content>
+  <ion-content *ngIf="folder === 'MyTrades'">
+    <app-book-card [folder]="folder" *ngFor="let book of myTradeList"
+                   [book]="book" >
+    </app-book-card>
 </ion-content>

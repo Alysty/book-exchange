@@ -32,6 +32,9 @@ export class BookDetailsPage implements OnInit {
       const bookId = paramMap.get('book-id');
       this.activatedRoute.queryParams.subscribe((params)=>{
         this.folder = params.folder;
+        if(this.folder === 'MyTrades'){
+          this.folder = 'MyBooks';
+        }
         if(this.folder === 'Trade'){
           this.tradeService.getTradeBookById(Number(bookId)).then((book)=> {
             this.book = book;

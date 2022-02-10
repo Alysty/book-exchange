@@ -1,5 +1,4 @@
 export interface Book{
-  //field
   id: number;
   title: string;
   synopses: string;

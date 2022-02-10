@@ -12,7 +12,7 @@ export class TradeService {
   exchangeBook(book: Book){
     this.storage.dbReady.subscribe(()=> this.storage.exchangeBooks(book));
   }
-  getTradeBooks(): Observable<any[]> {
+  getTradeBooks(): Observable<Book[]> {
     return this.storage.getTradeBooks();
   }
   getTradeBookById(id: number){

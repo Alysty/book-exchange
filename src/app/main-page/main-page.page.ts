@@ -13,6 +13,7 @@ export class MainPagePage implements OnInit {
   public folder: string;
   public bookList: Book[] = [];
   public bookTradeList: Book[] = [];
+  public myTradeList: Book[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private myBooksService: BookCardService,
@@ -26,6 +27,12 @@ export class MainPagePage implements OnInit {
       case 'Trade':
         this.tradeServiceService.getTradeBooks().subscribe((books)=>{
           this.bookTradeList = books;
+        });
+        break;
+      case 'MyTrades':
+        this.myBooksService.getBooks().subscribe((books)=>{
+          // @ts-ignore
+          this.myTradeList = books.filter((book)=>book.beingTraded === 'true');
         });
         break;
       default:

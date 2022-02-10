@@ -18,7 +18,7 @@ export class BookCardService {
   changeBook(book: Book){
     this.storage.dbReady.subscribe(()=> this.storage.changeBook(book));
   }
-  getBooks(): Observable<any[]> {
+  getBooks(): Observable<Book[]> {
     return this.storage.getBooks();
   }
   getBookById(id: number){
