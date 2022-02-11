@@ -14,27 +14,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-item>
-    <ion-label>Title: </ion-label>
+  <ion-item class="inputItem">
+    <ion-label position="floating">Title</ion-label>
     <ion-input *ngIf="folder==='MyBooks'" [(ngModel)]="book.title"></ion-input>
     <ion-input *ngIf="folder==='Trade'" readonly="true" [(ngModel)]="book.title"></ion-input>
   </ion-item>
-  <ion-item type="number">
-    <ion-label>Price: </ion-label>
+  <ion-item type="number" class="inputItem">
+    <ion-label position="floating">Price</ion-label>
     <ion-input *ngIf="folder==='MyBooks'" type="number" [(ngModel)]="book.price"></ion-input>
     <ion-input *ngIf="folder==='Trade'" readonly="true" type="number" [(ngModel)]="book.price"></ion-input>
   </ion-item>
-  <ion-item *ngIf="folder==='MyBooks'" >
+  <ion-item *ngIf="folder==='MyBooks'" class="inputItem">
     <ion-label>I want to trade this book:</ion-label>
-    <ion-toggle [(ngModel)]="book.beingTraded"></ion-toggle>
+    <ion-toggle [ngModel]="book.beingTraded" (ngModelChange)="checkValue($event)"></ion-toggle>
   </ion-item>
-  <ion-item>
-    <ion-label position="floating">Synopses:</ion-label>
+  <ion-item class="inputItem">
+    <ion-label position="floating">Synopses</ion-label>
     <ion-textarea *ngIf="folder==='MyBooks'" [(ngModel)]="book.synopses" ></ion-textarea>
     <ion-textarea *ngIf="folder==='Trade'" readonly="true" [(ngModel)]="book.synopses" ></ion-textarea>
   </ion-item>
 
-  <ion-button *ngIf="creatingNewBookFlag === false && folder!=='Trade'" expand="block" (click)="changeBook()" >Save Changes</ion-button>
-  <ion-button *ngIf="creatingNewBookFlag === true && folder!=='Trade'" expand="block" (click)="addBook()" >Add book</ion-button>
-  <ion-button *ngIf="creatingNewBookFlag === false && folder==='Trade'" expand="block" (click)="buyBook()" >Buy</ion-button>
+  <ion-button *ngIf="creatingNewBookFlag === false && folder!=='Trade'" class="button" expand="block" (click)="changeBook()" >Save Changes</ion-button>
+  <ion-button *ngIf="creatingNewBookFlag === true && folder!=='Trade'" class="button" expand="block" (click)="addBook()" >Add book</ion-button>
+  <ion-button *ngIf="creatingNewBookFlag === false && folder==='Trade'" class="button" expand="block" (click)="buyBook()" >Buy</ion-button>
 </ion-content>

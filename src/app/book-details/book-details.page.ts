@@ -4,7 +4,7 @@ import {BookCardService} from '../book-card/book-card.service';
 import {Book} from '../custom-types/Book.model';
 import {AlertController} from '@ionic/angular';
 import {StorageService} from '../storage.service';
-import {TradeService} from "../trade-service/trade.service";
+import {TradeService} from '../trade-service/trade.service';
 
 @Component({
   selector: 'app-book-details',
@@ -81,5 +81,13 @@ export class BookDetailsPage implements OnInit {
   buyBook(){
     this.tradeService.exchangeBook(this.book);
     this.router.navigate(['/main-page/Trade']);
+  }
+
+  checkValue(beingTraded) {
+    if(beingTraded){
+      this.book.beingTraded = true;
+    }else{
+      this.book.beingTraded = false;
+    }
   }
 }
