@@ -30,10 +30,10 @@ export class StorageService {
   get dbReady(): BehaviorSubject<boolean> {
     return this.dbReadyVar;
   }
-  getBooks(): Observable<any[]> {
+  getBooks(): Observable<Book[]> {
     return this.books.asObservable();
   }
-  getTradeBooks(): Observable<any[]> {
+  getTradeBooks(): Observable<Book[]> {
     return this.tradeBooks.asObservable();
   }
   addBook(bookDB: BookDB){
@@ -91,6 +91,14 @@ export class StorageService {
     this.loadBooks();
     this.loadTradeBooks();
   }
+  convertToBoolean(input: string): boolean | undefined {
+    try {
+      return JSON.parse(input);
+    }
+    catch (e) {
+      return undefined;
+    }
+  }
   private createTables(){
     this.httpClient.get('assets/dbTable.sql', {responseType: 'text'}).subscribe((sql)=>{
       this.sqlPorter.importSqlToDb(this.database,sql).then(()=>{
@@ -112,7 +120,7 @@ export class StorageService {
               title:data.rows.item(i).TITLE,
               synopses:data.rows.item(i).SYNOPSIS,
               price:data.rows.item(i).PRICE,
-              beingTraded:data.rows.item(i).BEING_TRADED
+              beingTraded:this.convertToBoolean(data.rows.item(i).BEING_TRADED)
             });
           }
         }

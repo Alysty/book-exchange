@@ -31,8 +31,7 @@ export class MainPagePage implements OnInit {
         break;
       case 'MyTrades':
         this.myBooksService.getBooks().subscribe((books)=>{
-          // @ts-ignore
-          this.myTradeList = books.filter((book)=>book.beingTraded === 'true');
+          this.myTradeList = books.filter((book)=>book.beingTraded);
         });
         break;
       default:
