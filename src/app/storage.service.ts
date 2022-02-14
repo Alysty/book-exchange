@@ -37,18 +37,18 @@ export class StorageService {
     return this.tradeBooks.asObservable();
   }
   addBook(bookDB: BookDB){
-    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
-      [bookDB.title, bookDB.synopses, bookDB.price, bookDB.beingTraded]).catch(e => console.error(e));
+    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED, IMAGE) values (?1, ?2, ?3, ?4, ?5);',
+      [bookDB.title, bookDB.synopses, bookDB.price, bookDB.beingTraded, bookDB.image]).catch(e => console.error(e));
     this.loadBooks();
   }
   removeBook(id: number){
-    this.database.executeSql('DELETE FROM  Book WHERE id = ?1;',
+    this.database.executeSql('DELETE FROM Book WHERE id = ?1;',
       [id]).catch(e => console.error(e));
     this.loadBooks();
   }
   changeBook(book: Book){
-    this.database.executeSql('UPDATE Book SET title = ?1, synopsis = ?2, price = ?3, BEING_TRADED = ?4 WHERE id = ?5;',
-      [book.title, book.synopses, book.price, book.beingTraded, book.id]).catch(e => console.error(e));
+    this.database.executeSql('UPDATE Book SET title = ?1, synopsis = ?2, price = ?3, BEING_TRADED = ?4, IMAGE = ?5 WHERE id = ?6;',
+      [book.title, book.synopses, book.price, book.beingTraded, book.image, book.id]).catch(e => console.error(e));
     this.loadBooks();
   }
   getBookById(id: number): Promise<Book>{
@@ -60,7 +60,8 @@ export class StorageService {
             title:data.rows.item(0).TITLE,
             synopses:data.rows.item(0).SYNOPSIS,
             price:data.rows.item(0).PRICE,
-            beingTraded:data.rows.item(0).BEING_TRADED
+            beingTraded:data.rows.item(0).BEING_TRADED,
+            image:data.rows.item(0).IMAGE
           };
         }else {
           throw new Error('Book not found');
@@ -76,7 +77,8 @@ export class StorageService {
             title:data.rows.item(0).TITLE,
             synopses:data.rows.item(0).SYNOPSIS,
             price:data.rows.item(0).PRICE,
-            beingTraded: true
+            beingTraded: true,
+            image:data.rows.item(0).IMAGE
           };
         }else {
           throw new Error('Book not found');
@@ -84,8 +86,8 @@ export class StorageService {
       }).catch(e =>{throw e;});
   }
   exchangeBooks(book: Book){
-    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED) values (?1, ?2, ?3, ?4);',
-      [book.title, book.synopses, book.price, false]).catch(e => console.error(e));
+    this.database.executeSql('insert OR ignore into Book ( TITLE, SYNOPSIS, PRICE, BEING_TRADED, IMAGE) values (?1, ?2, ?3, ?4, ?5);',
+      [book.title, book.synopses, book.price, false, book.image]).catch(e => console.error(e));
     this.database.executeSql('DELETE FROM  BookInTrade WHERE id = ?1;',
       [book.id]).catch(e => console.error(e));
     this.loadBooks();
@@ -120,7 +122,8 @@ export class StorageService {
               title:data.rows.item(i).TITLE,
               synopses:data.rows.item(i).SYNOPSIS,
               price:data.rows.item(i).PRICE,
-              beingTraded:this.convertToBoolean(data.rows.item(i).BEING_TRADED)
+              beingTraded:this.convertToBoolean(data.rows.item(i).BEING_TRADED),
+              image:data.rows.item(0).IMAGE
             });
           }
         }
@@ -138,7 +141,8 @@ export class StorageService {
               title:data.rows.item(i).TITLE,
               synopses:data.rows.item(i).SYNOPSIS,
               price:data.rows.item(i).PRICE,
-              beingTraded: true
+              beingTraded: true,
+              image:data.rows.item(0).IMAGE
             });
           }
         }

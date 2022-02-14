@@ -8,12 +8,21 @@
     <ion-title *ngIf="creatingNewBookFlag === true">Add Book</ion-title>
     <ion-buttons slot="primary" *ngIf="creatingNewBookFlag === false && folder !== 'Trade'">
       <ion-button (click)="deleteBook()">
-        <ion-icon slot="icon-only" name="trash" ></ion-icon>
+        <ion-icon name="trash"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-item *ngIf="folder!=='Trade'"  class="inputItem">
+    <ion-thumbnail slot="start">
+      <ion-img [src]="image"></ion-img>
+    </ion-thumbnail>
+    <ion-button fill="clear" expand="full" color="primary" (click)="selectImage()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Select Image
+    </ion-button>
+  </ion-item>
   <ion-item class="inputItem">
     <ion-label position="floating">Title</ion-label>
     <ion-input *ngIf="folder==='MyBooks'" [(ngModel)]="book.title"></ion-input>
